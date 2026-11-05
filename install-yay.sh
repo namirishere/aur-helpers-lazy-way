@@ -25,21 +25,34 @@ case $choice in
     1)
         echo -e "\n${YELLOW}Starting installation...${NC}"
         sudo pacman -S --needed git base-devel && \
-        git clone https://archlinux.org /tmp/yay && \
+        git clone https://aur.archlinux.org/yay.git /tmp/yay && \
         cd /tmp/yay && \
         makepkg -si --noconfirm && \
         cd - && \
         rm -rf /tmp/yay
 
-        clear
-        echo -e "${GREEN}==================================================${NC}"
-        echo -e "${GREEN}      Installation Finished Successfully!         ${NC}"
-        echo -e "${GREEN}==================================================${NC}"
-        echo ""
-        echo "  Thank you everybody for installing our script!"
-        echo -e "  ${YELLOW}Contribute to us now.${NC}"
-        echo ""
-        echo -e "${GREEN}==================================================${NC}"
+        # Verification check
+        if command -v yay &> /dev/null; then
+            clear
+            echo -e "${GREEN}==================================================${NC}"
+            echo -e "${GREEN}      Installation Finished Successfully!         ${NC}"
+            echo -e "${GREEN}==================================================${NC}"
+            echo ""
+            echo "  Thank you everybody for installing our script!"
+            echo -e "  ${YELLOW}Contribute to us now.${NC}"
+            echo ""
+            echo -e "${GREEN}==================================================${NC}"
+        else
+            clear
+            echo -e "${RED}==================================================${NC}"
+            echo -e "${RED}              Installation Failed!                ${NC}"
+            echo -e "${RED}==================================================${NC}"
+            echo ""
+            echo "  The installation completed but 'yay' was not found."
+            echo "  Please check for compilation errors above."
+            echo ""
+            echo -e "${RED}==================================================${NC}"
+        fi
         ;;
     2)
         echo ""
